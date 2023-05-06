@@ -17,9 +17,19 @@
 12. 真没有荚饺，
 13. 荔枝？
 14. 你要我怎么荔枝！？
+## 环境部署
+- [x] jdk1.8
+- [x] mysql8.0
 ## 技术选型？？？（唱跳rap篮球music）
 
 
 ## 编码规范
 
 一个真正的鳗不需要规范，要啥自行车，写注释多累人啊！！
+
+## Dockerfile镜像的一些坑
+###  openjdk:8-jdk-alpine
+```
+java.lang.NoClassDefFoundError: Could not initialize class sun.awt.X11FontManager
+```
+这个错误一般出现在生成验证码绘制的时候，这个错误大概原因就是由于在alpine上太过于精简了，导致初始化FontManagerFactory工厂初始化失败，那么解决办法就是安装glibc。
