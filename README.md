@@ -1,7 +1,4 @@
-[toc]
-
-
-
+@[TOC]
 # 坤吧管理系统
 
 > 全民制作人大家好我是练习时常两年半（一坤年）的只因练习生坤坤。
@@ -11,7 +8,7 @@
 > keywords(关键词): 小黑子、java、spring、mysql、毕业设计
 
 <div align="center">
-<img src="./images/R-C.jpg" width="300px">
+<img src="./images/R-C.jpg" width="300" alt="一个真正的鳗" />
 </div>
 
 
