@@ -14,7 +14,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 /**
  * The type Global exception.
  *
- * @author 张宪泰
+ * @author dalaodi
  */
 @RestControllerAdvice
 @Slf4j
