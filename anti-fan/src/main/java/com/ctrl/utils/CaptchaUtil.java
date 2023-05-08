@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 /**
- * The type Captcha util.
+ * The type Captcha util.验证码工具类
  *
  * @author dalaodi
  */
