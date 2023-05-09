@@ -34,12 +34,13 @@
 14.  你要我怎么荔枝！？
 15. 据野史记载，唐高宗李治吃饭，饭桌上有虾头，鸡，油饼，果粉。常常对身边的扇扇子的说“速扇”。饭后还要吃一个甜品，荔枝味的酥山。厨子为了做这一顿饭，拿姜拿到手软，担心柴火不够时，经常问“有没有树枝啊”
 16. 你这么黑他，你知道我们家坤坤有多努力吗？ 你知道他这两年半的练习时间是怎么度过的吗？你们这些小黑子不知道，只知道黑他，所以说鸡到底有多美？
+17. 挖什么金矿？
 ## 环境部署
 
 - [x] jdk1.8
 - [x] mysql8.0
 - [x] docker
-
+- [x] redis
 1. 不想搭建可以让别人给搭建(既然最求刺激那就贯彻到底喽)
 2. **dockerfile使用之前记得修改一下docker的配置文件**
 
@@ -50,12 +51,35 @@
 ## 编码规范
 
 一个真正的鳗不需要规范，要啥自行车，写注释多累人啊！！
+## 结构层级
+```bash
+C:.
+└─src
+     ├─main
+     │  ├─java
+     │  │  └─com
+     │  │      └─ctrl
+     │  │          ├─config
+     │  │          ├─controller
+     │  │          │  ├─login
+     │  │          │  └─user
+     │  │          ├─dao
+     │  │          ├─entity
+     │  │          ├─exception
+     │  │          ├─service
+     │  │          └─utils
+     │  └─resources
+     └─test
+        └─java
+```
+## 测试类
+听我的测试类没用，屎山代码需要测试？
 
 ## Dockerfile镜像的一些坑
 
 ### openjdk:8-jdk-alpine过于精简？
 
-```java
+```bash
 java.lang.NoClassDefFoundError: Could not initialize class sun.awt.X11FontManager
 ```
 
