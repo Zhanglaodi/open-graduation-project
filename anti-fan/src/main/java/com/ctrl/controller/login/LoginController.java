@@ -5,7 +5,6 @@ import com.ctrl.entity.user.UsersLoginDTO;
 import com.ctrl.entity.user.UsersVO;
 import com.ctrl.service.AntiFanLoginService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
