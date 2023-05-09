@@ -1,11 +1,19 @@
 package com.ctrl.controller.login;
 
 import com.ctrl.entity.CommonResult;
-import com.ctrl.utils.CaptchaUtil;
+import com.ctrl.entity.user.UsersLoginDTO;
+import com.ctrl.entity.user.UsersVO;
+import com.ctrl.service.AntiFanLoginService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.Map;
 
 /**
  * The type Login controller.
@@ -14,17 +22,23 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequestMapping(value = "/api/login")
 @RestController
-@Slf4j
 public class LoginController {
+    /**
+     * The Anti fan login service.
+     */
+    @Resource
+    AntiFanLoginService antiFanLoginService;
+
     /**
      * Login common result.登录方法
      *
+     * @param usersLoginDTO the users login dto
      * @return the common result
+     * @throws JsonProcessingException the json processing exception
      */
     @RequestMapping(value = "/login")
-    public CommonResult<String> login() {
-        log.info("登录成功");
-        return CommonResult.ok("登录成功", null);
+    public CommonResult<UsersVO> login(@Validated @Valid UsersLoginDTO usersLoginDTO) throws JsonProcessingException {
+        return antiFanLoginService.login(usersLoginDTO);
     }
 
 
@@ -34,8 +48,7 @@ public class LoginController {
      * @return the captcha
      */
     @GetMapping(value = "/get_captcha")
-    public CommonResult<CaptchaUtil.Captcha> getCaptcha() {
-        CaptchaUtil.Captcha generate = CaptchaUtil.generate(4);
-        return CommonResult.ok("获取验证码成功", generate);
+    public CommonResult<Map<String, String>> getCaptcha() {
+        return antiFanLoginService.getCaptcha();
     }
 }
