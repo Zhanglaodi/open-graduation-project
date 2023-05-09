@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ctrl.dao.AntiFanLoginMapper;
 import com.ctrl.entity.CommonResult;
-import com.ctrl.entity.ResultException;
 import com.ctrl.entity.user.UsersDO;
 import com.ctrl.entity.user.UsersLoginDTO;
 import com.ctrl.entity.user.UsersVO;
@@ -74,18 +73,21 @@ public class AntiFanLoginServiceImpl implements AntiFanLoginService {
     public CommonResult<UsersVO> login(UsersLoginDTO usersLoginDTO) throws JsonProcessingException {
         QueryWrapper<UsersDO> wrapper = Wrappers.query();
         wrapper.eq("phone", usersLoginDTO.getAccount());
-        UsersDO xtUser = antiFanLoginMapper.selectOne(wrapper);
         String token = request.getParameter("token");
-        UsersDO data =
-                Optional.ofNullable(xtUser).orElseThrow(
-                        () -> new ResultException(-1, "密码错误或账户不存在1"));
+        Optional<UsersDO> xtUser =
+                Optional.ofNullable(antiFanLoginMapper.selectOne(wrapper));
+        //假如为空就返回用户不存在的提示
+        if (!xtUser.isPresent()) {
+            return CommonResult.error(-1, "密码错误或账户不存在2");
+        }
+        UsersDO data = xtUser.get();
         String s = redisUtils.get("anti_fan:" + token, 7);
         Map jsonToBean = JsonUtils.getJsonToBean(s, Map.class);
         if (!usersLoginDTO.getVerificationCode().equals(jsonToBean.get("verification_code"))) {
             return CommonResult.error(-1, "验证码错误");
         }
         String passwordSha1 = DigestUtils.sha1DigestAsHex(usersLoginDTO.getPassword());
-        String password = DigestUtils.sha1DigestAsHex(data.getSalt() + passwordSha1 + data.getSalt());
+        String password = DigestUtils.sha1DigestAsHex(data.getSalt() + passwordSha1);
         if (!password.equals(data.getPassword())) {
             return CommonResult.error(-1, "密码错误或账户不存在2");
         }
