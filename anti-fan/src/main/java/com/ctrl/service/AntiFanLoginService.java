@@ -29,4 +29,11 @@ public interface AntiFanLoginService {
      * @throws JsonProcessingException the json processing exception
      */
     CommonResult<UsersVO> login(UsersLoginDTO usersLoginDTO) throws JsonProcessingException;
+
+    /**
+     * Exit common result.
+     *
+     * @return the common result
+     */
+    CommonResult<String> exit();
 }
