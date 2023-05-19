@@ -2,6 +2,7 @@ package com.ctrl.entity.user;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -21,6 +22,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("anti_fan_users")
 public class UsersDO implements Serializable {
     /**
      * The interface Add method.
@@ -105,4 +107,10 @@ public class UsersDO implements Serializable {
     @Size(max = 255, message = "编码长度不能超过255")
     @ApiModelProperty("密码")
     private String password;
+    /**
+     * avatar
+     */
+    @Size(max = 255, message = "编码长度不能超过255")
+    @ApiModelProperty("头像")
+    private String avatar;
 }
