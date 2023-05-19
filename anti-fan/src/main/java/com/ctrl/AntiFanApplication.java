@@ -2,6 +2,7 @@ package com.ctrl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * The type Anti fan application.
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @description 主启动类
  */
 @SpringBootApplication
+@ServletComponentScan
 public class AntiFanApplication {
     /**
      * The entry point of application.
