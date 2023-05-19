@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @author dalaodi
  */
 @Mapper
-public interface AntiFanLoginMapper extends BaseMapper<UsersDO> {
+public interface UserMapper extends BaseMapper<UsersDO> {
 }
