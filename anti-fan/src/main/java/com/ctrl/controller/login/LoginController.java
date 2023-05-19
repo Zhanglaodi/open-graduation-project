@@ -50,4 +50,15 @@ public class LoginController {
     public CommonResult<Map<String, String>> getCaptcha() {
         return antiFanLoginService.getCaptcha();
     }
+
+
+    /**
+     * Exit common result.
+     *
+     * @return the common result
+     */
+    @RequestMapping(value = "/exit")
+    public CommonResult<String> exit() {
+        return antiFanLoginService.exit();
+    }
 }
