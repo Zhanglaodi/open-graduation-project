@@ -1,6 +1,7 @@
 package com.ctrl.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 结果异常
@@ -8,6 +9,7 @@ import lombok.Data;
  * @author dalaodi
  * @date 2023 /03/28
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ResultException extends RuntimeException  {
     /**
