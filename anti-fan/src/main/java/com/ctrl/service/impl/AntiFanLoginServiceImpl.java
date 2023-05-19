@@ -2,7 +2,7 @@ package com.ctrl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.ctrl.dao.AntiFanLoginMapper;
+import com.ctrl.dao.UserMapper;
 import com.ctrl.entity.CommonResult;
 import com.ctrl.entity.user.UsersDO;
 import com.ctrl.entity.user.UsersLoginDTO;
@@ -12,6 +12,7 @@ import com.ctrl.utils.CaptchaUtil;
 import com.ctrl.utils.JsonUtils;
 import com.ctrl.utils.RedisUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.script.DigestUtils;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import java.util.UUID;
  * @author dalaodi
  */
 @Service
+@Slf4j
 public class AntiFanLoginServiceImpl implements AntiFanLoginService {
     /**
      * The Redis utils.
@@ -45,7 +47,7 @@ public class AntiFanLoginServiceImpl implements AntiFanLoginService {
      * The Anti fan login mapper.
      */
     @Resource
-    AntiFanLoginMapper antiFanLoginMapper;
+    UserMapper antiFanLoginMapper;
 
     /**
      * Gets captcha.
@@ -103,6 +105,7 @@ public class AntiFanLoginServiceImpl implements AntiFanLoginService {
         String passwordSha1 = DigestUtils.sha1DigestAsHex(usersLoginDTO.getPassword());
         //加密后的password拼接密码盐再一次加密
         String password = DigestUtils.sha1DigestAsHex(data.getSalt() + passwordSha1);
+        log.info(password);
         //比对前端加密后的密码与数据库是否一致
         if (!password.equals(data.getPassword())) {
             return CommonResult.error(-1, "密码错误或账户不存在");
@@ -110,9 +113,17 @@ public class AntiFanLoginServiceImpl implements AntiFanLoginService {
         //登录成功删除七号库数据 把用户部分信息存储到八号库
         redisUtils.set("anti_fan:" + token, data, 8, 7200);
         redisUtils.delete("anti_fan:" + token, 7);
-        return CommonResult.ok("登录成功", new UsersVO(
-                data.getUserName(),
-                data.getEmail(),
-                data.getPhone()));
+        return CommonResult.ok("登录成功", null);
+    }
+
+    /**
+     * exit 退出
+     * @return CommonResult<String>
+     */
+    @Override
+    public CommonResult<String> exit() {
+        String requestToken = request.getParameter("token");
+        redisUtils.delete("anti_fan:" + requestToken, 8);
+        return CommonResult.ok("退出成功", null);
     }
 }
