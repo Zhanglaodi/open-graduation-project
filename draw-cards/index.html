@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>抽卡翻牌</title>
+  <style>
+    .card {
+      width: 200px;
+      height: 300px;
+      position: relative;
+      perspective: 1000px;
+      display: inline-block;
+      margin: 10px;
+      cursor: pointer;
+      border: 10px goldenrod solid;
+    }
+
+    .card .inner {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s;
+      transform-style: preserve-3d;
+    }
+
+    .card .front,
+    .card .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .card .front {
+      background-color: #f2f2f2;
+    }
+
+    .card .back {
+      background-color: #fff;
+      transform: rotateY(180deg);
+    }
+
+    .card.flipped .inner {
+      transform: rotateY(180deg);
+    }
+
+    .card .back-image {
+      width: 190px;
+      /* 设置图像宽度 */
+      height: auto;
+      /* 根据宽度等比缩放高度 */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cardContainer"></div>
+
+  <button id="drawCardButton">抽卡</button>
+  <button id="flipAllButton">一键翻牌</button>
+
+  <script src="./js/jquery.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+
+</html>
