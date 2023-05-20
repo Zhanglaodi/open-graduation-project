@@ -65,29 +65,32 @@ public class RaffleServiceImpl implements RaffleService {
         List<RaffleD0> demo = new ArrayList<>();
         //合理的方法是从内存中读取用户已经抽奖的次数
         //抽奖等级
-
         int level;
+        //随机
+        Random random = new Random();
         //抽奖十次
         int total = drawCards.getTotal();
         int current = drawCards.getCount();
         for (int i = 0; i < GUARANTEED_DRAW_COUNT; i++) {
             level = cardsUtils.drawCard();
             if (level != 0) {
-                if (current + 1 == 30) {
+                if (current + 1 >= 30) {
                     level = 3;
                 }
                 //返回到后端
-                demo.add(getRandomCards(level, raffleD0s));
+                demo.add(getRandomCards(level, raffleD0s, random));
                 drawCards.setTotal(total + 1);
                 drawCards.setCount(current + 1);
+                current = current + 1;
                 if (level == 3) {
                     //抽到奖励 这里就要重新开始计算保底
                     current = 0;
+                    drawCards.setCount(0);
                     //redisUtils.set("anti_fan:draw:" + jsonToBean.getPhone(), drawCards, 8);
                 }
             }
-            redisUtils.set("anti_fan:draw:" + jsonToBean.getPhone(), drawCards, 8);
         }
+        redisUtils.set("anti_fan:draw:" + jsonToBean.getPhone(), drawCards, 8);
         return CommonResult.ok("成功", demo);
     }
 
@@ -98,8 +101,7 @@ public class RaffleServiceImpl implements RaffleService {
      * @param list the list
      * @return the random cards
      */
-    public RaffleD0 getRandomCards(int i, List<RaffleD0> list) {
-        Random random = new Random();
+    public RaffleD0 getRandomCards(int i, List<RaffleD0> list, Random random) {
         List<RaffleD0> commonCards = list.stream().filter(raffle -> raffle.getLevel() == i).collect(Collectors.toList());
         return commonCards.get(random.nextInt(commonCards.size()));
     }
