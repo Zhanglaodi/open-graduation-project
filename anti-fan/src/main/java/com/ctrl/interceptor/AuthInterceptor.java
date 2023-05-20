@@ -57,11 +57,13 @@ public class AuthInterceptor implements HandlerInterceptor {
             //设置缓存中的时间为两个小时
             redisUtils.expire("anti_fan:" + token, 8, 7200);
         }
+        //获取请求中的时间戳
         String timeStamp = request.getParameter("timeStamp");
         if (timeStamp == null || !timeStamp.matches("^(\\d{10,13})$")) {
             sendErrorResponse(response, -21000, "请求时时间戳缺失或错误的时间格式");
             return false;
         }
+        //超时就会提示中间人工具 但是最为简单的方法就是非对称加密
         long localTime = Math.abs(System.currentTimeMillis() / 1000);
         if (localTime - Integer.parseInt(timeStamp) >= 10) {
             sendErrorResponse(response, -20000, "中间人攻击?");
@@ -91,7 +93,7 @@ public class AuthInterceptor implements HandlerInterceptor {
      */
     private void sendErrorResponse(HttpServletResponse response, int errorCode, String errorMessage) throws IOException {
         CommonResult<Object> error = CommonResult.error(errorCode, errorMessage);
-        String beanToJson = JsonUtils.getBeanToJson(error);
+        String beanToJson = JsonUtils.toJsonString(error);
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(beanToJson != null ? beanToJson : "error");
     }

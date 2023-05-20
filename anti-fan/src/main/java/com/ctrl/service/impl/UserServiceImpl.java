@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         //从token中取出数据 因为拦截器已经对token验证
         String token = request.getParameter("token");
         String s = redisUtils.get("anti_fan:" + token, 8);
-        UsersDO jsonToBean = JsonUtils.getJsonToBean(s, UsersDO.class);
+        UsersDO jsonToBean = JsonUtils.fromJsonString(s, UsersDO.class);
         UsersVO usersVO = new UsersVO();
         usersVO.setUserName(jsonToBean.getUserName());
         //当然需要脱敏处理一下 手机号码以及邮箱

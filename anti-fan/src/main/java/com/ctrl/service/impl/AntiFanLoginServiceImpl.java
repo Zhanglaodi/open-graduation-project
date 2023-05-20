@@ -96,7 +96,7 @@ public class AntiFanLoginServiceImpl implements AntiFanLoginService {
         }
         String s = sToken.get();
         //反序列化7号库数据
-        Map jsonToBean = JsonUtils.getJsonToBean(s, Map.class);
+        Map jsonToBean = JsonUtils.fromJsonString(s, Map.class);
         //通过比较请求中的验证码和内存中的验证码对比
         if (!usersLoginDTO.getVerificationCode().equals(jsonToBean.get("verification_code"))) {
             return CommonResult.error(-1, "验证码错误");

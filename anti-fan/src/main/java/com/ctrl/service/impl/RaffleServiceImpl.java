@@ -56,7 +56,7 @@ public class RaffleServiceImpl implements RaffleService {
         List<RaffleD0> raffleD0s = raffleMapper.selectList(null);
         //获取用户数据
         String userInfo = redisUtils.get("anti_fan:" + token, 8);
-        UsersDO jsonToBean = JsonUtils.getJsonToBean(userInfo, UsersDO.class);
+        UsersDO jsonToBean = JsonUtils.fromJsonString(userInfo, UsersDO.class);
         //获取当前抽卡的次数
         DrawCards drawCards = getAlreadyDrawCardsTime(jsonToBean);
         //抽卡工具类
@@ -121,7 +121,7 @@ public class RaffleServiceImpl implements RaffleService {
             redisUtils.set("anti_fan:draw:" + usersDO.getPhone(), drawCards, 8);
         }
         if (s != null) {
-            return JsonUtils.getJsonToBean(s, DrawCards.class);
+            return JsonUtils.fromJsonString(s, DrawCards.class);
         }
         return drawCards;
     }

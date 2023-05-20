@@ -1,6 +1,7 @@
 package com.ctrl.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,7 +23,7 @@ public class JsonUtils {
      * @param data 对象
      * @return JSON数据 bean to json
      */
-    public static String getBeanToJson(Object data) {
+    public static String toJsonString(Object data) {
         try {
             return MAPPER.writeValueAsString(data);
         } catch (JsonProcessingException e) {
@@ -40,64 +41,52 @@ public class JsonUtils {
      * @return 对象 json to bean
      * @throws JsonProcessingException the json processing exception
      */
-    public static <T> T getJsonToBean(String jsonData, Class<T> beanType) throws JsonProcessingException {
+    public static <T> T fromJsonString(String jsonData, Class<T> beanType) throws JsonProcessingException {
         return MAPPER.readValue(jsonData, beanType);
     }
 
     /**
-     * 将JSON数据转换成列表
+     * 将 JSON 字符串转换为指定类型的列表对象
      *
-     * @param <T>      the type parameter
-     * @param jsonData JSON数据
-     * @param beanType 对象类型
-     * @return 列表 json to list
+     * @param jsonString JSON 字符串
+     * @param valueType  目标对象类型
+     * @param <T>        目标对象泛型
+     * @return 目标对象列表
+     * @throws JsonProcessingException JSON 处理异常
      */
-    public static <T> List<T> getJsonToList(String jsonData, Class<T> beanType) {
-        try {
-            JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, beanType);
-            return MAPPER.readValue(jsonData, javaType);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static <T> List<T> fromJsonList(String jsonString, Class<T> valueType) throws JsonProcessingException {
+        return MAPPER.readValue(jsonString, new TypeReference<List<T>>() {
+        });
     }
 
     /**
-     * 将JSON数据转换成Set集合
+     * 将 JSON 字符串转换为指定类型的 Set 对象
      *
-     * @param <E>         the type parameter
-     * @param jsonData    JSON数据
-     * @param elementType 元素类型
-     * @return Set集合 json to set
+     * @param jsonString JSON 字符串
+     * @param valueType  目标对象类型
+     * @param <T>        目标对象泛型
+     * @return 目标对象 Set
+     * @throws JsonProcessingException JSON 处理异常
      */
-    public static <E> Set<E> getJsonToSet(String jsonData, Class<E> elementType) {
-        try {
-            JavaType javaType = MAPPER.getTypeFactory().constructCollectionType(Set.class, elementType);
-            return MAPPER.readValue(jsonData, javaType);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static <T> Set<T> fromJsonSet(String jsonString, Class<T> valueType) throws JsonProcessingException {
+        return MAPPER.readValue(jsonString, new TypeReference<Set<T>>() {
+        });
     }
 
     /**
-     * 将JSON数据转换成Map集合
+     * 将 JSON 字符串转换为指定类型的 Map 对象
      *
-     * @param <K>       the type parameter
-     * @param <V>       the type parameter
-     * @param jsonData  JSON数据
-     * @param keyType   键类型
-     * @param valueType 值类型
-     * @return Map集合 json to map
+     * @param jsonString JSON 字符串
+     * @param keyType    Map 键类型
+     * @param valueType  Map 值类型
+     * @param <K>        键类型泛型
+     * @param <V>        值类型泛型
+     * @return Map 对象
+     * @throws JsonProcessingException JSON 处理异常
      */
-    public static <K, V> Map<K, V> getJsonToMap(String jsonData, Class<K> keyType, Class<V> valueType) {
-        try {
-            JavaType javaType = MAPPER.getTypeFactory().constructMapType(Map.class, keyType, valueType);
-            return MAPPER.readValue(jsonData, javaType);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static <K, V> Map<K, V> fromJsonMap(String jsonString, Class<K> keyType, Class<V> valueType) throws JsonProcessingException {
+        return MAPPER.readValue(jsonString, new TypeReference<Map<K, V>>() {
+        });
     }
 
 }

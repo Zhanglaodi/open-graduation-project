@@ -65,7 +65,7 @@ public class RedisUtils {
     public void set(String key, Object value, Integer dbIndex, long expire) {
         // 选择数据库
         setDbIndex(dbIndex);
-        redisTemplate.opsForValue().set(key, Objects.requireNonNull(JsonUtils.getBeanToJson(value)));
+        redisTemplate.opsForValue().set(key, Objects.requireNonNull(JsonUtils.toJsonString(value)));
         if (expire != NOT_EXPIRE) {
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
         }
@@ -109,7 +109,7 @@ public class RedisUtils {
         if (expire != NOT_EXPIRE) {
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
         }
-        return value == null ? null : JsonUtils.getJsonToBean(value, clazz);
+        return value == null ? null : JsonUtils.fromJsonString(value, clazz);
     }
 
     /**
