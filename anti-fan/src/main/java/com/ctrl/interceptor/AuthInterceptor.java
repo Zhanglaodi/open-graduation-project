@@ -44,13 +44,13 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         if (requestURI.contains("/api/login/login")) {
             //判断验证码/token是否失效
-            if (validateToken(token, "anti_fan:" + token, 7)) {
+            if (validateToken("anti_fan:" + token, 7)) {
                 sendErrorResponse(response, -9999, "非法的token");
                 return false;
             }
         } else {
             //从缓存中读取用户是否登录
-            if (validateToken(token, "anti_fan:" + token, 8)) {
+            if (validateToken("anti_fan:" + token, 8)) {
                 sendErrorResponse(response, -9997, "未登录，请先登录");
                 return false;
             }
@@ -73,13 +73,13 @@ public class AuthInterceptor implements HandlerInterceptor {
     /**
      * 验证token
      *
-     * @param token        token
      * @param redisKey     key
      * @param redisDbIndex dbIndex
      * @return boolean
      */
-    private boolean validateToken(String token, String redisKey, int redisDbIndex) {
-        return !Optional.ofNullable(redisUtils.get(token + redisKey, redisDbIndex)).isPresent();
+    private boolean validateToken(String redisKey, int redisDbIndex) {
+        System.out.println("key=" + ":" + redisKey + "\\" + redisUtils.get(redisKey, redisDbIndex));
+        return !Optional.ofNullable(redisUtils.get(redisKey, redisDbIndex)).isPresent();
     }
 
     /**
