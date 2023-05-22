@@ -48,10 +48,10 @@ public class JsonUtils {
     /**
      * 将 JSON 字符串转换为指定类型的列表对象
      *
+     * @param <T>        目标对象泛型
      * @param jsonString JSON 字符串
      * @param valueType  目标对象类型
-     * @param <T>        目标对象泛型
-     * @return 目标对象列表
+     * @return 目标对象列表 list
      * @throws JsonProcessingException JSON 处理异常
      */
     public static <T> List<T> fromJsonList(String jsonString, Class<T> valueType) throws JsonProcessingException {
@@ -62,9 +62,9 @@ public class JsonUtils {
     /**
      * 将 JSON 字符串转换为指定类型的 Set 对象
      *
+     * @param <T>        目标对象泛型
      * @param jsonString JSON 字符串
      * @param valueType  目标对象类型
-     * @param <T>        目标对象泛型
      * @return 目标对象 Set
      * @throws JsonProcessingException JSON 处理异常
      */
@@ -76,11 +76,11 @@ public class JsonUtils {
     /**
      * 将 JSON 字符串转换为指定类型的 Map 对象
      *
+     * @param <K>        键类型泛型
+     * @param <V>        值类型泛型
      * @param jsonString JSON 字符串
      * @param keyType    Map 键类型
      * @param valueType  Map 值类型
-     * @param <K>        键类型泛型
-     * @param <V>        值类型泛型
      * @return Map 对象
      * @throws JsonProcessingException JSON 处理异常
      */
