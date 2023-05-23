@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * The type Error controller.
  *
- * @author 张宪泰
+ * @author dalaodi
  */
 @RestController
 public class ErrorController {
