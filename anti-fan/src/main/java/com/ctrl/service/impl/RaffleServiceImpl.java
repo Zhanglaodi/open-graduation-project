@@ -2,7 +2,9 @@ package com.ctrl.service.impl;
 
 import com.ctrl.entity.CommonResult;
 import com.ctrl.entity.DrawCards;
-import com.ctrl.entity.raffle.RaffleD0;
+import com.ctrl.entity.raffle.RaffleConverter;
+import com.ctrl.entity.raffle.RaffleDO;
+import com.ctrl.entity.raffle.RaffleVO;
 import com.ctrl.entity.user.UsersDO;
 import com.ctrl.service.RaffleService;
 import com.ctrl.utils.DrawCardsUtils;
@@ -48,12 +50,12 @@ public class RaffleServiceImpl implements RaffleService {
      * @return the common result
      */
     @Override
-    public CommonResult<List<RaffleD0>> raffle() throws JsonProcessingException {
+    public CommonResult<List<RaffleVO>> raffle() throws JsonProcessingException {
 
         String token = request.getParameter("token");
         int GUARANTEED_DRAW_COUNT = 10;
         //所有数据
-        List<RaffleD0> raffleD0s = raffleMapper.selectList(null);
+        List<RaffleDO> raffleD0s = raffleMapper.selectList(null);
         //获取用户数据
         String userInfo = redisUtils.get("anti_fan:" + token, 8);
         UsersDO jsonToBean = JsonUtils.fromJsonString(userInfo, UsersDO.class);
@@ -62,7 +64,7 @@ public class RaffleServiceImpl implements RaffleService {
         //抽卡工具类
         DrawCardsUtils cardsUtils = new DrawCardsUtils();
         //最终返回的结果
-        List<RaffleD0> demo = new ArrayList<>();
+        List<RaffleVO> demo = new ArrayList<>();
         //合理的方法是从内存中读取用户已经抽奖的次数
         //抽奖等级
         int level;
@@ -101,9 +103,10 @@ public class RaffleServiceImpl implements RaffleService {
      * @param list the list
      * @return the random cards
      */
-    public RaffleD0 getRandomCards(int i, List<RaffleD0> list, Random random) {
-        List<RaffleD0> commonCards = list.stream().filter(raffle -> raffle.getLevel() == i).collect(Collectors.toList());
-        return commonCards.get(random.nextInt(commonCards.size()));
+    public RaffleVO getRandomCards(int i, List<RaffleDO> list, Random random) {
+        List<RaffleDO> commonCards = list.stream().filter(raffle -> raffle.getLevel() == i).collect(Collectors.toList());
+        RaffleDO raffleD0 = commonCards.get(random.nextInt(commonCards.size()));
+        return RaffleConverter.convertToVO(raffleD0);
     }
 
 
