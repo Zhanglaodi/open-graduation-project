@@ -1,10 +1,9 @@
-package com.ctrl.controller;
+package com.ctrl.controller.raffle;
 
 import com.ctrl.entity.CommonResult;
-import com.ctrl.entity.raffle.RaffleD0;
+import com.ctrl.entity.raffle.RaffleVO;
 import com.ctrl.service.RaffleService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +32,7 @@ public class RaffleController {
      * @throws JsonProcessingException the json processing exception
      */
     @PostMapping(value = "/draw_cards")
-    public CommonResult<List<RaffleD0>> drawCards() throws JsonProcessingException {
+    public CommonResult<List<RaffleVO>> drawCards() throws JsonProcessingException {
         return raffleService.raffle();
     }
 }
