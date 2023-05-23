@@ -80,7 +80,6 @@ public class AuthInterceptor implements HandlerInterceptor {
      * @return boolean
      */
     private boolean validateToken(String redisKey, int redisDbIndex) {
-        System.out.println("key=" + ":" + redisKey + "\\" + redisUtils.get(redisKey, redisDbIndex));
         return !Optional.ofNullable(redisUtils.get(redisKey, redisDbIndex)).isPresent();
     }
 
