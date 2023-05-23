@@ -24,7 +24,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Validated
 @TableName(value = "anti_fan_raffle")
-public class RaffleD0 implements Serializable {
+public class RaffleDO implements Serializable {
 
     /**
      * The interface Add method.
@@ -43,8 +43,8 @@ public class RaffleD0 implements Serializable {
     /**
      * id
      */
-    @Null(message = "新增时id必须为空", groups = {RaffleD0.AddMethod.class})
-    @NotNull(message = "更新时id不能为空", groups = {RaffleD0.EditMethod.class})
+    @Null(message = "新增时id必须为空", groups = {RaffleDO.AddMethod.class})
+    @NotNull(message = "更新时id不能为空", groups = {RaffleDO.EditMethod.class})
     @ApiModelProperty("ID")
     private Integer id;
 
@@ -54,14 +54,14 @@ public class RaffleD0 implements Serializable {
     @Size(max = 255, message = "编码长度不能超过255")
     @ApiModelProperty("用户名")
     @JsonProperty("user_name")
-    @NotBlank(message = "用户名称不能为空", groups = {RaffleD0.AddMethod.class})
+    @NotBlank(message = "用户名称不能为空", groups = {RaffleDO.AddMethod.class})
     private String characterName;
 
     /**
      * 卡牌等级
      */
     @ApiModelProperty("卡牌等级")
-    @NotBlank(message = "用户名称不能为空", groups = {RaffleD0.AddMethod.class})
+    @NotBlank(message = "用户名称不能为空", groups = {RaffleDO.AddMethod.class})
     private Integer level;
 
     /**
