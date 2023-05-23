@@ -1,7 +1,7 @@
 package com.ctrl.service;
 
 import com.ctrl.entity.CommonResult;
-import com.ctrl.entity.raffle.RaffleD0;
+import com.ctrl.entity.raffle.RaffleVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
@@ -16,5 +16,5 @@ public interface RaffleService {
      * @return the common result
      * @throws JsonProcessingException the json processing exception
      */
-    CommonResult<List<RaffleD0>> raffle() throws JsonProcessingException;
+    CommonResult<List<RaffleVO>> raffle() throws JsonProcessingException;
 }
