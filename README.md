@@ -1,14 +1,18 @@
-- [坤吧管理系统](#------)
+- [坤吧管理系统🐥](#--------)
     * [环境部署](#----)
-    * [技术选型](#----------rap--music-)
+    * [技术选型](#----)
     * [编码规范](#----)
+        + [注释](#--)
+        + [变量](#--)
+    * [结构层级](#----)
+    * [测试](#--)
     * [Dockerfile镜像的一些坑](#dockerfile------)
         + [openjdk:8-jdk-alpine过于精简？](#openjdk-8-jdk-alpine-----)
+    * [参考文献](#----)
 # 坤吧管理系统🐥
 
-> 全民制作人大家好我是练习时常两年半（一坤年）的只因练习生坤坤。</br>
-> 为了方便真爱粉（你干嘛哎呦），防止虾头男。应该有一个小黑子管理系统！！！</br>
-> 适当玩梗，有一说一kun挺大方的</br>
+
+> 适当玩梗
 
 ## 环境部署
 
@@ -20,8 +24,6 @@
 2. **dockerfile使用之前记得修改一下docker的配置文件**
 
 ## 技术选型
-
-不想写（你知道他多努力吗？）
 
 - [x] Spring Boot 2.7.7
 - [x] Spring Admin 2.7.7
@@ -63,8 +65,7 @@ C:.
      └─test
         └─java
 ```
-## 测试类
-听我的测试类没用，屎山代码需要测试？
+## 测试
 
 ## Dockerfile镜像的一些坑
 
@@ -78,4 +79,4 @@ java.lang.NoClassDefFoundError: Could not initialize class sun.awt.X11FontManage
 
 ## 参考文献
 
-<a href="https://github.com/Zhanglaodi/open-graduation-project/blob/main/ana/ikun.md">kun</a>
+<a href="https://github.com/Zhanglaodi/open-graduation-project/blob/main/ana/ikun.md">ikun语录</a>
