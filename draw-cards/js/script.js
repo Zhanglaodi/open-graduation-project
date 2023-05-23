@@ -7,7 +7,7 @@ $(document).ready(function () {
     drawCardButton.click(function () {
         cardContainer.empty();
         const info = {
-            token: "0207bf59-8cc8-4fb2-892d-af05dc923e68", timeStamp: Math.round(Date.now() / 1000)
+            token: "d23c8d07-a834-4a3b-9747-c8cf6133cbab", timeStamp: Math.round(Date.now() / 1000)
         }
         isFlipped = false;
 
@@ -25,10 +25,10 @@ $(document).ready(function () {
                     var front = $("<div>").addClass("front");
                     var back = $("<div>").addClass("back");
 
-                    var frontText = $("<div>").addClass("front-text").text("点击翻牌");
+                    var frontText = $("<div>").addClass("front-text").text("点击翻牌"+cardData[i].level);
                     var backContent = $("<div>").addClass("back-content");
-                    var backImage = $("<img>").addClass("back-image").attr("src", cardData[i].postImg);
-                    var backText = $("<div>").addClass("back-text").text(cardData[i].user_name);
+                    var backImage = $("<img>").addClass("back-image").attr("src", cardData[i].headImg);
+                    var backText = $("<div>").addClass("back-text").text(cardData[i].characterName);
 
                     front.append(frontText);
                     backContent.append(backImage);
