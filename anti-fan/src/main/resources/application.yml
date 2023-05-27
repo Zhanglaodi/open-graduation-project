@@ -9,9 +9,17 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8088
+        url: http://192.168.0.151:10000
         instance:
           prefer-ip: true
+        username: suntae
+        password: suntae2012
+  rabbitmq:
+    host: 192.168.0.119
+    port: 5673
+    username: guest
+    password: guest
+    virtualHost: /
 
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
