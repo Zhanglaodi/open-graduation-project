@@ -34,7 +34,6 @@ public class GlobalException {
      */
     @ExceptionHandler(Exception.class)
     public CommonResult<Void> exceptionHandler(Exception e) {
-        e.printStackTrace();
         log.error("异常:{}", e.getLocalizedMessage());
         return CommonResult.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Server Error.");
     }
