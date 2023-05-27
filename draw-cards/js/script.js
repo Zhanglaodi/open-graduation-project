@@ -16,7 +16,7 @@ $(document).ready(function () {
             type: 'POST',
             data: info,
             success: function (response) {
-                var cardData = response.data; // 根据后台返回的数据结构获取卡片数据
+                var cardData = response.data.data; // 根据后台返回的数据结构获取卡片数据
 
                 // 创建卡片元素
                 for (var i = 0; i < cardData.length; i++) {
