@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class CommonResult<T> {
     private Integer code;
     private String message;
-    private T data;
+    private CountAndData< ? extends T> data;
 
     /**
      * Ok common result. 成功返回
@@ -26,7 +26,7 @@ public class CommonResult<T> {
      * @param data    the data
      * @return the common result
      */
-    public static <T> CommonResult<T> ok(String message, T data) {
+    public static <T> CommonResult<T> ok(String message, CountAndData<T> data) {
         return new CommonResult<>(200, message, data);
     }
 
