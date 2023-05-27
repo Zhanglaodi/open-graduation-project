@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ctrl.dao.UserMapper;
 import com.ctrl.entity.CommonResult;
+import com.ctrl.entity.CountAndData;
 import com.ctrl.entity.user.UsersDO;
 import com.ctrl.entity.user.UsersVO;
 import com.ctrl.service.UserService;
@@ -59,7 +60,7 @@ public class UserServiceImpl implements UserService {
         usersVO.setAge(jsonToBean.getAge());
         usersVO.setSex(jsonToBean.getSex());
 
-        return CommonResult.ok("获取用户信息成功", usersVO);
+        return CommonResult.ok("获取用户信息成功", new CountAndData<>(0, usersVO));
     }
 
     /**

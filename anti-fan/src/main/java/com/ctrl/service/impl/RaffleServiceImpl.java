@@ -1,6 +1,7 @@
 package com.ctrl.service.impl;
 
 import com.ctrl.entity.CommonResult;
+import com.ctrl.entity.CountAndData;
 import com.ctrl.entity.DrawCards;
 import com.ctrl.entity.raffle.RaffleConverter;
 import com.ctrl.entity.raffle.RaffleDO;
@@ -93,7 +94,7 @@ public class RaffleServiceImpl implements RaffleService {
             }
         }
         redisUtils.set("anti_fan:draw:" + jsonToBean.getPhone(), drawCards, 8);
-        return CommonResult.ok("成功", demo);
+        return CommonResult.ok("成功", new CountAndData<>(0, demo));
     }
 
     /**
@@ -103,8 +104,9 @@ public class RaffleServiceImpl implements RaffleService {
      * @param list the list
      * @return the random cards
      */
-    public RaffleVO getRandomCards(int i, List<RaffleDO> list, Random random) {
+    private RaffleVO getRandomCards(int i, List<RaffleDO> list, Random random) {
         List<RaffleDO> commonCards = list.stream().filter(raffle -> raffle.getLevel() == i).collect(Collectors.toList());
+        //随机获取一张卡片 根据卡片的等级
         RaffleDO raffleD0 = commonCards.get(random.nextInt(commonCards.size()));
         return RaffleConverter.convertToVO(raffleD0);
     }
@@ -117,7 +119,7 @@ public class RaffleServiceImpl implements RaffleService {
      * @return the already draw cards time
      * @throws JsonProcessingException the json processing exception
      */
-    public DrawCards getAlreadyDrawCardsTime(UsersDO usersDO) throws JsonProcessingException {
+    private DrawCards getAlreadyDrawCardsTime(UsersDO usersDO) throws JsonProcessingException {
         String s = redisUtils.get("anti_fan:draw:" + usersDO.getPhone(), 8);
         DrawCards drawCards = new DrawCards(0, 0);
         if (Objects.isNull(s)) {
@@ -127,5 +129,16 @@ public class RaffleServiceImpl implements RaffleService {
             return JsonUtils.fromJsonString(s, DrawCards.class);
         }
         return drawCards;
+    }
+
+    /**
+     * Set user draw cards 修改用户抽奖表
+     *
+     * @param usersDO the users do
+     * @param list    the RaffleVO list
+     * @return int
+     */
+    private int setUserDrawCards(UsersDO usersDO, List<RaffleVO> list) {
+        return 0;
     }
 }

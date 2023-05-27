@@ -1,12 +1,8 @@
 package com.ctrl.service.impl;
 
 import com.ctrl.entity.CommonResult;
-import com.ctrl.entity.raffle.RaffleD0;
 import com.ctrl.service.RaffleConfigService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Random;
 
 /**
  * The type Raffle config service.
