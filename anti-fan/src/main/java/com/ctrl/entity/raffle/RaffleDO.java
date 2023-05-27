@@ -3,7 +3,6 @@ package com.ctrl.entity.raffle;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.ctrl.entity.user.UsersDO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +12,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -88,4 +90,34 @@ public class RaffleDO implements Serializable {
     @TableField(fill = FieldFill.UPDATE)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private String updateTime;
+
+    /**
+     * 卡牌基础防御
+     */
+    @ApiModelProperty("卡牌基础防御")
+    private Integer baseDefense;
+
+    /**
+     * 基础力量
+     */
+    @ApiModelProperty("卡牌基础防御")
+    private Integer baseStrength;
+
+    /**
+     * 基础速度
+     */
+    @ApiModelProperty("卡牌基础速度")
+    private Integer baseSpeed;
+
+    /**
+     * 基础血量
+     */
+    @ApiModelProperty("卡牌基础血量")
+    private Integer baseHealth;
+
+    /**
+     * 技能
+     */
+    @ApiModelProperty("卡牌技能")
+    private String skills;
 }
