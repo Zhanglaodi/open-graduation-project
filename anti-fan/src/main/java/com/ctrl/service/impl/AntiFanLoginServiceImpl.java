@@ -68,7 +68,7 @@ public class AntiFanLoginServiceImpl implements AntiFanLoginService {
         //下面的代码的意思是7号库缓存时间为120秒
         redisUtils.set("anti_fan:" + token, map, 7, 120);
         map.replace("verification_code", generate.getImageCode());
-        return CommonResult.ok("获取验证码成功", new CountAndData<>(0, map));
+        return CommonResult.ok("获取验证码成功", new CountAndData<>(null, map));
     }
 
     /**
