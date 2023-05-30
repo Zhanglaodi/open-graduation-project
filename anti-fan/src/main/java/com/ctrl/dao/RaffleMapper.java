@@ -1,4 +1,4 @@
-package com.ctrl.service.impl;
+package com.ctrl.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ctrl.entity.raffle.RaffleDO;
