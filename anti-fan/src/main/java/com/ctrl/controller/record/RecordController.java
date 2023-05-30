@@ -14,10 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/record")
 public class RecordController {
+
+    /**
+     * Query list common result.
+     *
+     * @return the common result
+     */
     @PostMapping(value = "/queryList")
     public CommonResult<List<String>> queryList(
     ) {
-
         CountAndData<List<String>> a = null;
         return CommonResult.ok("查询成功", a);
     }
