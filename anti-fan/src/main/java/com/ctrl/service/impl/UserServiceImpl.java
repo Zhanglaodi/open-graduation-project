@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
         usersVO.setAge(jsonToBean.getAge());
         usersVO.setSex(jsonToBean.getSex());
 
-        return CommonResult.ok("获取用户信息成功", new CountAndData<>(0, usersVO));
+        return CommonResult.ok("获取用户信息成功", new CountAndData<>(null, usersVO));
     }
 
     /**
