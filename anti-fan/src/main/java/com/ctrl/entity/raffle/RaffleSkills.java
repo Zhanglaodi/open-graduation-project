@@ -3,6 +3,9 @@ package com.ctrl.entity.raffle;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * The type Raffle skills.
+ */
 @Data
 public class RaffleSkills {
     private String name;
