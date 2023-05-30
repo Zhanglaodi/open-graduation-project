@@ -9,11 +9,9 @@ spring:
   boot:
     admin:
       client:
-        url: http://192.168.0.151:10000
+        url: http://localhost:8088
         instance:
           prefer-ip: true
-        username: suntae
-        password: suntae2012
   rabbitmq:
     host: 192.168.0.119
     port: 5673
@@ -56,3 +54,9 @@ management:
 logging:
   file:
     name: logs/output.log
+
+ssh:
+  host: 192.168.0.119
+  port: 22
+  username: root
+  password: root
