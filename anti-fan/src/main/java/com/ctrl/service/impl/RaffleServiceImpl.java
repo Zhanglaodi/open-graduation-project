@@ -1,5 +1,6 @@
 package com.ctrl.service.impl;
 
+import com.ctrl.dao.RaffleMapper;
 import com.ctrl.entity.CommonResult;
 import com.ctrl.entity.CountAndData;
 import com.ctrl.entity.DrawCards;
@@ -94,7 +95,7 @@ public class RaffleServiceImpl implements RaffleService {
             }
         }
         redisUtils.set("anti_fan:draw:" + jsonToBean.getPhone(), drawCards, 8);
-        return CommonResult.ok("成功", new CountAndData<>(0, demo));
+        return CommonResult.ok("成功", new CountAndData<>(null, demo));
     }
 
     /**
