@@ -37,7 +37,8 @@ public class CommonConfig implements WebMvcConfigurer {
         registry.addInterceptor(myInterceptor).
                 addPathPatterns("/**").
                 excludePathPatterns("/api/login/get_captcha").excludePathPatterns(EXCLUDE_PATH);
-        registry.addInterceptor(authInterceptor)
+        registry.addInterceptor(authInterceptor).
+                addPathPatterns("/**")
                 .excludePathPatterns("/api/login/get_captcha").excludePathPatterns(EXCLUDE_PATH);
     }
 
