@@ -2,8 +2,6 @@ package com.ctrl.service;
 
 import com.ctrl.entity.CommonResult;
 
-import java.io.IOException;
-
 /**
  * The interface Back up service.
  */
@@ -16,5 +14,5 @@ public interface BackUpService {
      * @param dbName   the db name
      * @return the common result
      */
-    CommonResult<String> backUpMySql(String userName, String password, String dbName) throws IOException;
+    CommonResult<String> backUpMySql(String userName, String password, String dbName) throws Exception;
 }

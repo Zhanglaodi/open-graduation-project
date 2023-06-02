@@ -1,31 +1,23 @@
 package com.ctrl.service.impl;
 
+import com.ctrl.entity.CommandResult;
 import com.ctrl.entity.CommonResult;
 import com.ctrl.service.BackUpService;
-import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.connection.channel.direct.Session;
-import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
-import org.springframework.beans.factory.annotation.Value;
+import com.ctrl.utils.SSHConnectionPool;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.Session;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * The type Back up service.
  */
 @Service
+@Slf4j
 public class BackUpServiceImpl implements BackUpService {
-    @Value("${ssh.host}")
-    private String host;
 
-    @Value("${ssh.port}")
-    private int port;
-
-    @Value("${ssh.username}")
-    private String username;
-
-    @Value("${ssh.password}")
-    private String sshPassword;
 
     /**
      * Back up my sql common result.
@@ -36,28 +28,73 @@ public class BackUpServiceImpl implements BackUpService {
      * @return the common result
      */
     @Override
-    public CommonResult<String> backUpMySql(String userName, String password, String dbName) throws IOException {
-        try (SSHClient sshClient = new SSHClient()) {
-            // 设置SSH连接的配置
-            sshClient.addHostKeyVerifier(new PromiscuousVerifier());
-            sshClient.connect(host, port);
-            sshClient.authPassword(username, sshPassword);
-            // 构建远程命令
-            String scriptPath = "/opt/shell/backup_database.sh ";
-            String commandBuilder = "bash " +
-                    scriptPath +
-                    " " + userName + " " + password + " " + dbName;
-            String command = commandBuilder.trim();
-            Session session = sshClient.startSession();
-            Session.Command commandObj = session.exec(command);
-            commandObj.join();
-            int exitCode = commandObj.getExitStatus();
-            commandObj.close();
-            session.close();
-            if (exitCode == 0) {
-                return CommonResult.ok("执行成功", null);
-            }
-            return CommonResult.error(-1, "执行失败");
+    public CommonResult<String> backUpMySql(String userName, String password, String dbName) throws Exception {
+        String commandBuilder = "bash " +
+                "/opt/shell/backup_database.sh " +
+                " " + userName + " " + password + " " + dbName;
+        CommandResult commandResult = backUpMethods(commandBuilder);
+        log.info("执行信息:{}", commandResult);
+        if (commandResult != null && commandResult.getExitCode() == 0) {
+            return CommonResult.ok("执行成功", null);
         }
+        return CommonResult.error(-1, "执行失败");
+    }
+
+    /**
+     * 备份方法
+     *
+     * @param command command
+     * @return CommandResult
+     * @throws Exception exception
+     */
+    private CommandResult backUpMethods(String command) throws Exception {
+        SSHConnectionPool connectionPool = new SSHConnectionPool();
+        Session session = null;
+        try {
+            session = connectionPool.getConnection();
+            return executeCommand(session, command);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                connectionPool.releaseConnection(session);
+            }
+            connectionPool.close();
+        }
+        return null;
+    }
+
+    /**
+     * @param session session
+     * @param command command
+     * @return CommandResult
+     * @throws Exception 异常
+     */
+    private static CommandResult executeCommand(Session session, String command) throws Exception {
+        ChannelExec channel = null;
+        try {
+            channel = (ChannelExec) session.openChannel("exec");
+            channel.setCommand(command);
+            channel.connect();
+
+            StringBuilder output = new StringBuilder();
+
+            try (InputStream inputStream = channel.getInputStream()) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    output.append(new String(buffer, 0, bytesRead));
+                }
+            }
+
+            int exitCode = channel.getExitStatus();
+
+            return new CommandResult(output.toString(), exitCode);
+        } finally {
+            if (channel != null) {
+                channel.disconnect();
+            }
+        }
+
     }
 }
