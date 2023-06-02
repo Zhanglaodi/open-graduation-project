@@ -13,6 +13,7 @@ import com.ctrl.utils.DrawCardsUtils;
 import com.ctrl.utils.JsonUtils;
 import com.ctrl.utils.RedisUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,6 +46,9 @@ public class RaffleServiceImpl implements RaffleService {
      */
     @Resource
     HttpServletRequest request;
+
+    @Resource
+    RabbitTemplate rabbitTemplate;
 
     /**
      * Raffle common result.
@@ -94,6 +98,7 @@ public class RaffleServiceImpl implements RaffleService {
                 }
             }
         }
+        rabbitTemplate.convertAndSend("test", "draw", Objects.requireNonNull(JsonUtils.toJsonString(demo)));
         redisUtils.set("anti_fan:draw:" + jsonToBean.getPhone(), drawCards, 8);
         return CommonResult.ok("成功", new CountAndData<>(null, demo));
     }
