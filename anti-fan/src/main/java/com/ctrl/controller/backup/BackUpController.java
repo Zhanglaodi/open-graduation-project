@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 
 /**
  * The type Back up controller.
@@ -24,7 +23,7 @@ public class BackUpController {
      * @return common result
      */
     @PostMapping(value = "back_up_mysql")
-    public CommonResult<String> backUpMySql() throws IOException {
+    public CommonResult<String> backUpMySql() throws Exception {
         return backUpService.backUpMySql("root", "123456", "wiki");
     }
 }
