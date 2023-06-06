@@ -1,4 +1,4 @@
-package com.ctrl.utils;
+package com.example.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
