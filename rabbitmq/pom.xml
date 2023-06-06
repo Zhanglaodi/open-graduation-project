@@ -21,6 +21,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.anti-fan</groupId>
+            <artifactId>public-method</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!--admin-->
         <dependency>
             <groupId>de.codecentric</groupId>
