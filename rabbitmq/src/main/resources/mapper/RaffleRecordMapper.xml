@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.org.example.dao.RaffleRecordMapper">
+    <!--插入列表-->
+    <insert id="insertList">
+        insert into anti_fan.anti_fan_raffle_record(user_id,content,record_time,details)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},#{item.cardInfo},now(),#{item.details})
+        </foreach>
+    </insert>
+</mapper>
