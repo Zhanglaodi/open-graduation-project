@@ -1,8 +1,5 @@
-package com.example.utils;
+package com.ctrl.utils;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
@@ -95,11 +92,32 @@ public class CaptchaUtil {
     /**
      * The type Captcha.
      */
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class Captcha implements Serializable {
         private String code;
         private String imageCode;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getImageCode() {
+            return imageCode;
+        }
+
+        public void setImageCode(String imageCode) {
+            this.imageCode = imageCode;
+        }
+
+        public Captcha() {
+        }
+
+        public Captcha(String code, String imageCode) {
+            this.code = code;
+            this.imageCode = imageCode;
+        }
     }
 }

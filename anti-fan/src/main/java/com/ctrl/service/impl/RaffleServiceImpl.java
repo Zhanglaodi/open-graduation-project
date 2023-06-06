@@ -9,9 +9,9 @@ import com.ctrl.entity.raffle.RaffleDO;
 import com.ctrl.entity.raffle.RaffleVO;
 import com.ctrl.entity.user.UsersDO;
 import com.ctrl.service.RaffleService;
+import com.ctrl.utils.DrawCardsUtils;
+import com.ctrl.utils.JsonUtils;
 import com.ctrl.utils.RedisUtils;
-import com.example.utils.DrawCardsUtils;
-import com.example.utils.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -86,7 +86,7 @@ public class RaffleServiceImpl implements RaffleService {
                     level = 3;
                 }
                 //返回到后端
-                demo.add(getRandomCards(level, raffleD0s, random));
+                demo.add(getRandomCards(level, raffleD0s, random, jsonToBean));
                 drawCards.setTotal(total + 1);
                 drawCards.setCount(current + 1);
                 current = current + 1;
@@ -110,11 +110,13 @@ public class RaffleServiceImpl implements RaffleService {
      * @param list the list
      * @return the random cards
      */
-    private RaffleVO getRandomCards(int i, List<RaffleDO> list, Random random) {
+    private RaffleVO getRandomCards(int i, List<RaffleDO> list, Random random, UsersDO usersDO) {
         List<RaffleDO> commonCards = list.stream().filter(raffle -> raffle.getLevel() == i).collect(Collectors.toList());
         //随机获取一张卡片 根据卡片的等级
         RaffleDO raffleD0 = commonCards.get(random.nextInt(commonCards.size()));
-        return RaffleConverter.convertToVO(raffleD0);
+        RaffleVO raffleVO = RaffleConverter.convertToVO(raffleD0);
+        raffleVO.setUserId(usersDO.getId().toString());
+        return raffleVO;
     }
 
 

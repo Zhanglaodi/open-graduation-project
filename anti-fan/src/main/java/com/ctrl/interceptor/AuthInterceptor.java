@@ -2,8 +2,8 @@ package com.ctrl.interceptor;
 
 
 import com.ctrl.entity.CommonResult;
+import com.ctrl.utils.JsonUtils;
 import com.ctrl.utils.RedisUtils;
-import com.example.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
